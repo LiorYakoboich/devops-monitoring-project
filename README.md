@@ -1,5 +1,5 @@
 # DevOps Monitoring Project
-
+![CI](https://github.com/LiorYakoboich/devops-monitoring-project/actions/workflows/ci.yml/badge.svg)
 A simple FastAPI service designed for DevOps monitoring demonstrations.
 
 ## Features

@@ -9,3 +9,7 @@ def read_root():
 @app.get("/health")
 def health_check():
     return {"status": "healthy"}
+
+@app.get("/metrics")
+def metrics():
+    return {"requests_total": "example_metric"}

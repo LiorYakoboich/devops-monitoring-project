@@ -27,3 +27,7 @@ jobs:
       - name: Verify app imports
         run: |
           python -c "from app.main import app; print('App loaded successfully')"
+
+      - name: Run tests
+        run: |
+          python -m pytest

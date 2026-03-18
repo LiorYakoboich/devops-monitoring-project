@@ -43,7 +43,7 @@ This project simulates a production-like service with full monitoring:
 
 ## 📊 Grafana Dashboard
 
-![Dashboard](docs/dashboard.png)
+![Grafana Dashboard](docs/dashboard.png)
 
 ---
 

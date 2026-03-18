@@ -1,8 +1,8 @@
 import logging
 import time
 
-from fastapi import FastAPI, Request
-from prometheus_client import Counter, Histogram, generate_latest, CONTENT_TYPE_LATEST
+from fastapi import FastAPI, HTTPException, Request
+from prometheus_client import CONTENT_TYPE_LATEST, Counter, Histogram, generate_latest
 from starlette.responses import Response
 
 logging.basicConfig(
@@ -29,11 +29,11 @@ REQUEST_LATENCY = Histogram(
 @app.middleware("http")
 async def metrics_middleware(request: Request, call_next):
     start_time = time.time()
+    endpoint = request.url.path
 
     response = await call_next(request)
 
     duration = time.time() - start_time
-    endpoint = request.url.path
 
     REQUEST_COUNT.labels(
         method=request.method,
@@ -60,6 +60,11 @@ def read_root():
 @app.get("/health")
 def health_check():
     return {"status": "healthy"}
+
+
+@app.get("/error")
+def error():
+    raise HTTPException(status_code=500, detail="Simulated error")
 
 
 @app.get("/metrics")

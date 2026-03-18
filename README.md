@@ -1,52 +1,88 @@
 # 🚀 DevOps Monitoring Project
 
-## 📌 Overview
+[![CI](https://github.com/LiorYakoboich/devops-monitoring-project/actions/workflows/ci.yml/badge.svg)](https://github.com/LiorYakoboich/devops-monitoring-project/actions)
 
-This project demonstrates a complete monitoring stack built using a FastAPI application, Prometheus, and Grafana.
-
-The goal of this project is to showcase DevOps skills by implementing real-time monitoring, metrics collection, and visualization in a containerized environment.
+A production-style DevOps monitoring project demonstrating a full observability stack using **FastAPI, Prometheus, and Grafana**.
 
 ---
 
-## 🧰 Tech Stack
+## 📌 Overview
 
-* **FastAPI** – Backend service
-* **Prometheus** – Metrics collection
-* **Grafana** – Visualization & dashboards
-* **Docker & Docker Compose** – Containerization
-* **Python** – Application logic
-* **GitHub Actions** – CI pipeline
+This project simulates a real-world microservice environment with monitoring capabilities.
+
+It includes:
+
+* A FastAPI application exposing metrics
+* Prometheus for metrics scraping
+* Grafana for visualization dashboards
+* Docker Compose for orchestration
+
+---
+
+## 🧱 Tech Stack
+
+* **Backend:** FastAPI (Python)
+* **Monitoring:** Prometheus
+* **Visualization:** Grafana
+* **Containerization:** Docker & Docker Compose
+* **CI/CD:** GitHub Actions
 
 ---
 
 ## ⚙️ Features
 
-* 📊 Real-time request monitoring
-* ⏱ Request latency tracking
-* 🔍 Custom Prometheus metrics
-* ❤️ Health check endpoint (`/health`)
-* 📈 Grafana dashboards with multiple panels:
-
-  * Request Rate (req/sec)
-  * Total Requests
-  * Request Latency
-* 🐳 Fully containerized environment using Docker Compose
+* ✅ FastAPI web service
+* ✅ Health check endpoint (`/health`)
+* ✅ Prometheus metrics endpoint (`/metrics`)
+* ✅ Request counting and latency tracking
+* ✅ Grafana dashboards for visualization
+* ✅ Dockerized environment
+* ✅ CI pipeline with GitHub Actions
 
 ---
 
-## 🏗 Architecture
+## 📊 Monitoring & Observability
 
-```
-Client → FastAPI App → Prometheus → Grafana Dashboard
-```
+The application exposes metrics using Prometheus, including:
 
-* The FastAPI app exposes metrics via `/metrics`
-* Prometheus scrapes metrics from the app
-* Grafana visualizes the data in dashboards
+* Total requests
+* Request rate (req/sec)
+* Request latency
+
+Grafana is used to visualize these metrics via dashboards.
 
 ---
 
-## 🚀 Getting Started
+## 📸 Dashboard Preview
+
+*Add your screenshot here*
+
+```md
+![Grafana Dashboard](docs/dashboard.png)
+```
+
+---
+
+## 📁 Project Structure
+
+```
+devops-monitoring-project/
+├── app/                      # FastAPI application
+├── prometheus/              # Prometheus configuration
+│   └── prometheus.yml
+├── grafana/
+│   └── dashboards/
+│       └── fastapi-dashboard.json   # Exported Grafana dashboard
+├── tests/                   # Unit tests
+├── docker-compose.yml
+├── Dockerfile
+├── requirements.txt
+├── README.md
+```
+
+---
+
+## ▶️ Run Locally
 
 ### 1. Clone the repository
 
@@ -55,9 +91,7 @@ git clone https://github.com/LiorYakoboich/devops-monitoring-project.git
 cd devops-monitoring-project
 ```
 
----
-
-### 2. Run with Docker Compose
+### 2. Run with Docker
 
 ```bash
 docker compose up --build
@@ -65,58 +99,62 @@ docker compose up --build
 
 ---
 
-### 3. Access the services
+## 🌐 Access the Services
 
-| Service     | URL                   |
-| ----------- | --------------------- |
-| FastAPI App | http://localhost:8000 |
-| Prometheus  | http://localhost:9090 |
-| Grafana     | http://localhost:3000 |
+| Service    | URL                           |
+| ---------- | ----------------------------- |
+| FastAPI    | http://localhost:8000         |
+| Metrics    | http://localhost:8000/metrics |
+| Prometheus | http://localhost:9090         |
+| Grafana    | http://localhost:3000         |
 
 ---
 
 ## 🔐 Grafana Login
 
-```text
-Username: admin
-Password: admin
+* **Username:** admin
+* **Password:** admin
+
+---
+
+## 📈 Grafana Dashboard
+
+The project includes a pre-built Grafana dashboard:
+
+📄 `grafana/dashboards/fastapi-dashboard.json`
+
+This dashboard visualizes:
+
+* Request Rate
+* Total Requests
+* Request Latency
+
+---
+
+## 🧪 Run Tests
+
+```bash
+pytest
 ```
 
 ---
 
-## 📊 Example Metrics
+## 🔄 CI Pipeline
 
-* `app_requests_total`
-* `app_request_duration_seconds`
+The project includes a GitHub Actions workflow that:
 
----
-
-## 📈 Dashboard Overview
-
-The Grafana dashboard includes:
-
-* **Request Rate** – number of requests per second
-* **Total Requests** – cumulative requests
-* **Request Latency** – response time tracking
+* Installs dependencies
+* Runs tests
+* Validates code
 
 ---
 
-## 🧠 What I Learned
+## 💡 Future Improvements
 
-* Building a monitoring system end-to-end
-* Working with Prometheus metrics
-* Designing Grafana dashboards
-* Containerizing applications with Docker
-* Connecting services using Docker Compose
-
----
-
-## 🔮 Future Improvements
-
-* Add alerting (Grafana Alerts / Alertmanager)
-* Deploy to cloud (AWS / GCP / Azure)
-* Add Kubernetes deployment
-* Improve CI/CD pipeline (build & push Docker images)
+* Grafana dashboard auto-provisioning
+* Kubernetes deployment
+* Alerting (Grafana / Prometheus alerts)
+* Load testing integration
 
 ---
 
@@ -126,4 +164,17 @@ The Grafana dashboard includes:
 
 ---
 
-⭐ If you found this project helpful, feel free to star the repo!
+## ⭐ Why This Project?
+
+This project demonstrates real DevOps skills:
+
+* Monitoring and observability setup
+* Working with metrics and dashboards
+* Containerized environments
+* CI/CD integration
+
+---
+
+## 🚀 Next Step
+
+👉 Automate Grafana dashboard provisioning (coming next!)

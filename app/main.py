@@ -1,39 +1,67 @@
 import logging
+import time
+
 from fastapi import FastAPI, Request
+from prometheus_client import Counter, Histogram, generate_latest, CONTENT_TYPE_LATEST
+from starlette.responses import Response
 
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s - %(levelname)s - %(message)s"
 )
-
 logger = logging.getLogger(__name__)
 
-app = FastAPI()
+app = FastAPI(title="DevOps Monitoring Project")
 
-request_count = 0
+REQUEST_COUNT = Counter(
+    "app_requests_total",
+    "Total number of HTTP requests",
+    ["method", "endpoint", "status_code"]
+)
+
+REQUEST_LATENCY = Histogram(
+    "app_request_duration_seconds",
+    "HTTP request latency in seconds",
+    ["method", "endpoint"]
+)
+
 
 @app.middleware("http")
-async def log_requests(request: Request, call_next):
-    logger.info(f"Incoming request: {request.method} {request.url.path}")
+async def metrics_middleware(request: Request, call_next):
+    start_time = time.time()
+
     response = await call_next(request)
-    logger.info(f"Response status: {response.status_code}")
+
+    duration = time.time() - start_time
+    endpoint = request.url.path
+
+    REQUEST_COUNT.labels(
+        method=request.method,
+        endpoint=endpoint,
+        status_code=response.status_code
+    ).inc()
+
+    REQUEST_LATENCY.labels(
+        method=request.method,
+        endpoint=endpoint
+    ).observe(duration)
+
+    logger.info(
+        f"{request.method} {endpoint} - {response.status_code} - {duration:.4f}s"
+    )
     return response
+
 
 @app.get("/")
 def read_root():
-    global request_count
-    request_count += 1
-    logger.info("Root endpoint accessed")
     return {"message": "DevOps monitoring project is running"}
+
 
 @app.get("/health")
 def health_check():
-    global request_count
-    request_count += 1
-    logger.info("Health check endpoint accessed")
     return {"status": "healthy"}
+
 
 @app.get("/metrics")
 def metrics():
-    logger.info("Metrics endpoint accessed")
-    return {"requests_total": request_count}
+    return Response(generate_latest(), media_type=CONTENT_TYPE_LATEST)
